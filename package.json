@@ -1,0 +1,19 @@
+{
+  "name": "lambda-finder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tauri 2 port of lambda-finder",
+  "scripts": {
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "build:linux": "tauri build --bundles deb,appimage",
+    "rebuild": "bash scripts/rebuild.sh",
+    "rebuild:run": "bash scripts/rebuild-and-run.sh",
+    "updater:keygen": "bash scripts/generate-updater-key.sh",
+    "release": "bash scripts/publish-update.sh"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0"
+  }
+}
