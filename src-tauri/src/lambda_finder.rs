@@ -29,6 +29,7 @@ pub struct Repo {
     pub dev: &'static str,
     pub stage: &'static str,
     pub preprod: &'static str,
+    pub production: &'static str,
     /// When `true`, every YAML in this repo is treated as the root template:
     /// no sub-stack prefix is derived from the filename. Use this for repos
     /// where the sub-stack name (if any) is already baked into each
@@ -42,6 +43,7 @@ impl Repo {
             "dev" => Some(self.dev),
             "stage" => Some(self.stage),
             "preprod" => Some(self.preprod),
+            "production" => Some(self.production),
             _ => None,
         }
     }
@@ -55,6 +57,7 @@ pub static REPOS: Lazy<Vec<Repo>> = Lazy::new(|| {
             dev: "service-requests-dev-",
             stage: "service-requests-stage-",
             preprod: "service-requests-preprod-",
+            production: "srb-production-",
             flat_layout: false,
         },
         Repo {
@@ -63,6 +66,7 @@ pub static REPOS: Lazy<Vec<Repo>> = Lazy::new(|| {
             dev: "utec-microservices-test-",
             stage: "utec-microservices-stage-",
             preprod: "utec-micro-preprod-",
+            production: "utec-ms-production-",
             flat_layout: false,
         },
         Repo {
@@ -71,6 +75,7 @@ pub static REPOS: Lazy<Vec<Repo>> = Lazy::new(|| {
             dev: "polaris-tasc-panel-dev-",
             stage: "polaris-tasc-panel-stageing-",
             preprod: "polaris-tasc-panel-pre-prod-",
+            production: "polaris-master-",
             flat_layout: false,
         },
         Repo {
@@ -79,6 +84,7 @@ pub static REPOS: Lazy<Vec<Repo>> = Lazy::new(|| {
             dev: "bpd-qrc-dev-env-",
             stage: "bpd-qrc-stage-env-",
             preprod: "bpd-qrc-pre-prod-",
+            production: "bpd-qrc-master-",
             flat_layout: false,
         },
         Repo {
@@ -87,6 +93,7 @@ pub static REPOS: Lazy<Vec<Repo>> = Lazy::new(|| {
             dev: "sr-tracker-test-",
             stage: "sr-tracker-staging-",
             preprod: "sr-tracker-preprod-",
+            production: "sr-tracker-production-",
             flat_layout: false,
         },
         Repo {
@@ -95,6 +102,7 @@ pub static REPOS: Lazy<Vec<Repo>> = Lazy::new(|| {
             dev: "utec-user-onboarding-test-",
             stage: "utec-user-onboarding-stage-",
             preprod: "utec-user-onboarding-preprod-",
+            production: "utec-user-onboarding-master-",
             flat_layout: false,
         },
         Repo {
@@ -103,6 +111,7 @@ pub static REPOS: Lazy<Vec<Repo>> = Lazy::new(|| {
             dev: "ubl-test-",
             stage: "ubl-staging-",
             preprod: "ubl-preprod-",
+            production: "ubl-master-",
             flat_layout: true,
         },
     ]
@@ -343,8 +352,8 @@ pub fn find_matches(repo_root: &str, endpoint: &str, env: &str) -> Result<FindRe
     if needle.is_empty() {
         return Err("Search term (Lambda name or API endpoint) is required".into());
     }
-    if !matches!(env, "dev" | "stage" | "preprod") {
-        return Err("Env must be one of: dev, stage, preprod".into());
+    if !matches!(env, "dev" | "stage" | "preprod" | "production") {
+        return Err("Env must be one of: dev, stage, preprod, production".into());
     }
 
     let root_path = PathBuf::from(repo_root);
